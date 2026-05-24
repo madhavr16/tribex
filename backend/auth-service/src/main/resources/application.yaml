@@ -1,0 +1,24 @@
+server:
+  port: 8081
+
+spring:
+  config:
+    import: optional:file:.env
+
+  datasource:
+    url: jdbc:postgresql://localhost:5434/tribex
+    username: postgres
+    password: postgres
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+
+    show-sql: true
+
+    properties:
+      hibernate:
+        format_sql: true
+
+  application:
+    name: auth-service
