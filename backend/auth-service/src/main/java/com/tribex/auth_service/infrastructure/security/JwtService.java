@@ -63,7 +63,7 @@ public class JwtService {
                 .setExpiration(
                         new Date(
                                 System.currentTimeMillis()
-                                        + 1000 * 60 * 60 * 24))
+                                        + 1000 * 60 * 60 * 24 * 7))
 
                 /*
                  * Sign token securely

@@ -3,12 +3,12 @@ server:
 
 spring:
   config:
-    import: optional:file:.env
+    import: optional:file:.env[.properties]
 
   datasource:
-    url: jdbc:postgresql://localhost:5434/tribex
-    username: postgres
-    password: postgres
+    url: ${DB_URL}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
 
   jpa:
     hibernate:

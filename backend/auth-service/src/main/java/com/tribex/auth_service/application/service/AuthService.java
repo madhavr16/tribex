@@ -1,8 +1,10 @@
 package com.tribex.auth_service.application.service;
 
 import com.tribex.auth_service.application.dto.*;
+import com.tribex.auth_service.domain.model.Role;
 import com.tribex.auth_service.domain.model.User;
 import com.tribex.auth_service.domain.repository.UserRepository;
+import com.tribex.auth_service.infrastructure.exception.BadRequestException;
 import com.tribex.auth_service.infrastructure.security.JwtService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -35,12 +37,12 @@ public class AuthService {
                 request.getEmail()
         )) {
 
-            throw new RuntimeException(
+            throw new BadRequestException(
                     "Email already exists"
             );
         }
 
-        /*
+        /*      
             Create user object
          */
         User user = User.builder()
@@ -54,6 +56,12 @@ public class AuthService {
                         passwordEncoder.encode(
                                 request.getPassword()
                         )
+                )
+                /*
+                    Set user role
+                 */
+                .role(
+                        Role.USER
                 )
                 .build();
 
@@ -85,7 +93,7 @@ public class AuthService {
         User user = userRepository.findByEmail(
                 request.getEmail()
         ).orElseThrow(() ->
-                new RuntimeException(
+                new BadRequestException(
                         "Invalid credentials"
                 )
         );
@@ -101,7 +109,7 @@ public class AuthService {
 
         if (!matches) {
 
-            throw new RuntimeException(
+            throw new BadRequestException(
                     "Invalid credentials"
             );
         }

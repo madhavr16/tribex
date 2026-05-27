@@ -48,4 +48,19 @@ public class User {
      */
     @Column(nullable = false)
     private String password;
+
+    /*
+        User role, default is USER
+     */
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false, columnDefinition = "varchar(255) default 'USER'")
+    @Builder.Default
+    private Role role = Role.USER;
+
+    @PrePersist
+    public void applyDefaults() {
+        if (role == null) {
+            role = Role.USER;
+        }
+    }
 }
