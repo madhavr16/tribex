@@ -1,0 +1,35 @@
+server:
+  port: 8085
+
+spring:
+
+  application:
+    name: gateway-service
+
+  cloud:
+
+    gateway:
+
+      routes:
+
+        # Auth Service
+        - id: auth-service
+
+          uri: http://auth-service:8081
+
+          predicates:
+            - Path=/api/auth/**
+
+        # Protected APIs
+        - id: auth-protected
+
+          uri: http://auth-service:8081
+
+          predicates:
+            - Path=/api/test/**
+
+        # Admin APIs
+        - id: admin-service
+          uri: http://auth-service:8081
+          predicates:
+            - Path=/api/admin/**
